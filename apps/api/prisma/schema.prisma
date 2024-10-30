@@ -29,12 +29,16 @@ model Events {
   name              String
   description       String
   date              DateTime
+  stock             String
+  image             String?
   venue             String
   price             Float
+  discounted_price Float
   created_by        Int
   created_at        DateTime       @default(now())
   transactions      Transactions[]
   bookings          Bookings[]
+
 
   created_by_user   Users          @relation("EventsCreated", fields: [created_by], references: [user_id])
 
