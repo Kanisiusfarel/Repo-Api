@@ -14,7 +14,7 @@ model Users {
   name              String
   email             String          @unique
   password          String
-  is_admin          Boolean         @default(false)
+  role              String
   created_at        DateTime        @default(now())
   transactions      Transactions[]
   bookings          Bookings[]
@@ -33,7 +33,7 @@ model Events {
   image             String?
   venue             String
   price             Float
-  discounted_price Float
+  discounted_price  Float
   created_by        Int
   created_at        DateTime       @default(now())
   transactions      Transactions[]
@@ -53,9 +53,23 @@ model Transactions {
   total_amount      Float
   transaction_date  DateTime  @default(now())
 
-  user                  Users    @relation(fields: [userId], references: [user_id])
-  event                 Events   @relation(fields: [eventId], references: [event_id])
-  coupon                Coupons? @relation(fields: [couponId], references: [coupon_id])
+  user              Users     @relation(fields: [userId], references: [user_id])
+  event             Events    @relation(fields: [eventId], references: [event_id])
+  coupon            Coupons?  @relation(fields: [couponId], references: [coupon_id])
+  
+  payments          Payments[] // Define the reverse relation field here
+
+  @@schema("projectevents")
+}
+
+model Payments {
+  payment_id        Int       @id @default(autoincrement())
+  transaction_id    Int       @unique
+  payment_type      String
+  payment_amount    Float
+  payment_date      DateTime  @default(now())
+
+  transaction       Transactions @relation(fields: [transaction_id], references: [transaction_id])
 
   @@schema("projectevents")
 }
