@@ -1,3 +1,5 @@
+/* global.css */
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -19,3 +21,136 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* Upper Bar Styling */
+.upper-bar {
+  background-color: white;
+  width: 100%;
+  height: 4vh;
+  border-bottom: 1px solid black;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 20;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Navbar Styling */
+.navbar {
+  background-color: transparent;
+  color: white;
+  border-top: none;
+  border-bottom: 1px solid white;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  position: fixed;
+  top: 4vh; /* Position just below the UpperBar */
+  width: 100%;
+  height: 8vh; /* Fixed height for Navbar */
+  z-index: 10; /* Ensure it remains above other content */
+}
+
+/* Navbar hover effects */
+.navbar-container:hover .upper-bar,
+.navbar-container:hover .navbar {
+  background-color: white;
+  color: black;
+  border-bottom-color: black;
+}
+
+.navbar-container:hover a,
+.navbar-container:hover span {
+  color: black;
+  /* Remove the border-bottom here to prevent extra underline */
+}
+
+/* Ensure navbar remains active when scrolling past */
+.scroll-hover-active .navbar {
+  background-color: white;  /* White background when scrolled */
+  color: black;
+  border-bottom-color: black;
+}
+
+/* Hero Banner Styling */
+.hero-banner {
+  position: relative;
+  width: 100%;
+  height: calc(100vh - 4vh); /* Full viewport height minus 4vh for UpperBar */
+  overflow: hidden;
+  margin-top: 4vh; /* Starts directly below the UpperBar */
+}
+
+/* Styling for Swiper Slide */
+.swiper-slide {
+  height: 100vh; /* Ensure the slide is full viewport height */
+  display: flex;
+  justify-content: center;
+  align-items: flex-end; /* Ensure text is at the bottom */
+}
+
+/* Text content on slides */
+.text-content {
+  position: relative;
+  padding: 2rem;
+  color: white;
+  text-align: right;
+  z-index: 10;
+}
+
+.text-content h2 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.text-content p {
+  font-size: 1.125rem;
+}
+
+/* Overlay for images (semi-transparent) */
+.bg-gray-500 {
+  background-color: rgba(128, 128, 128, 0.4);
+}
+
+/* Pagination Styling */
+.swiper-pagination-bullet {
+  background-color: #ffffff;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: #000000;
+}
+
+/* Optional: Add smooth transitions for slider image fade */
+.swiper-slide {
+  transition: all 0.5s ease;
+}
+
+/* Underline Animation for Navbar Links */
+.hover\:underline-animation {
+  position: relative;
+  display: inline-block;
+}
+
+.hover\:underline-animation::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0%;
+  height: 2px; /* Adjust thickness of the underline */
+  background-color: black; /* Underline color */
+  transition: width 0.3s ease; /* Animation speed */
+}
+
+.hover\:underline-animation:hover::after {
+  width: 100%; /* Expand underline to full width */
+}
+
+
+
+
+
+
+
+
+

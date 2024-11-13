@@ -15,6 +15,9 @@ model Users {
   email             String          @unique
   password          String
   role              String
+  refresh_token     String?
+  access_token      String?
+  google_id         String?
   created_at        DateTime        @default(now())
   transactions      Transactions[]
   bookings          Bookings[]
@@ -29,7 +32,7 @@ model Events {
   name              String
   description       String
   date              DateTime
-  stock             String
+  stock             Int
   image             String?
   venue             String
   price             Float
@@ -49,7 +52,9 @@ model Transactions {
   transaction_id    Int       @id @default(autoincrement())
   userId            Int
   eventId           Int
+  quantity          Int
   couponId          Int?      // Nullable if no coupon is used
+  total_price       Int
   total_amount      Float
   transaction_date  DateTime  @default(now())
 
@@ -76,9 +81,11 @@ model Payments {
 
 model Coupons {
   coupon_id             Int       @id @default(autoincrement())
+  productId             Int?
   code                  String    @unique
   discount_percentage   Int
-  expiration_date       DateTime
+  start_date            DateTime
+  end_date              DateTime
   created_by            Int
   transactions          Transactions[]
 

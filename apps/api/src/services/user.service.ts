@@ -112,13 +112,15 @@ export class UserService {
 
     // Create a transaction
     const transaction = await this.prisma.transactions.create({
-      data: {
-        userId: userId,
-        eventId: eventId,
-        quantity: quantity,
-        total_price: totalPrice,
-      },
-    });
+        data: {
+          userId: userId,
+          eventId: eventId,
+          quantity: quantity,
+          total_price: totalPrice,
+          total_amount: totalPrice, // Set total_amount; you could adjust this based on your calculation needs
+        },
+      });
+      
 
     return transaction;
   }

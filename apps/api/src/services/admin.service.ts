@@ -32,7 +32,7 @@ export class AdminService {
         name: validatedData.name,
         description: validatedData.description || "",
         date: new Date(), // Adjust date as needed; you may want to take it from data
-        stock: validatedData.stock.toString(), // Assuming stock needs to be a string
+        stock: validatedData.stock,
         image: validatedData.image,
         venue: validatedData.category, // Assuming category corresponds to venue
         price: validatedData.price,
@@ -51,7 +51,7 @@ export class AdminService {
       where: { event_id: eventId },
       data: {
         ...validatedData,
-        stock: validatedData.stock ? validatedData.stock.toString() : undefined,
+        stock: validatedData.stock ? validatedData.stock : undefined,
       },
     });
   }
@@ -78,20 +78,22 @@ export class AdminService {
     return this.prisma.coupons.findMany();
   }
 
-  // Create a new coupon
+  // Creating Coupons for Transaction.
   async createCoupon(couponData: {
     code: string;
-    discountPercentage: number;
-    expirationDate: Date;
-    createdBy: number;
+    discount_percentage: number;
+    start_date: Date;
+    end_date: Date;
+    created_by: number;
   }) {
     try {
       const newCoupon = await this.prisma.coupons.create({
         data: {
           code: couponData.code,
-          discount_percentage: couponData.discountPercentage,
-          expiration_date: couponData.expirationDate,
-          created_by: couponData.createdBy,
+          discount_percentage: couponData.discount_percentage,
+          start_date: couponData.start_date,
+          end_date: couponData.end_date,
+          created_by: couponData.created_by,
         },
       });
       return newCoupon;
@@ -101,4 +103,5 @@ export class AdminService {
     }
   }
 }
+
 
