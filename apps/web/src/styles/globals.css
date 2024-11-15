@@ -32,7 +32,7 @@ body {
   top: 0;
   left: 0;
   z-index: 20;
-  overflow: hidden;
+  overflow: hidden; /* Ensures content outside the viewport is hidden */
   display: flex;
   align-items: center;
 }
@@ -43,10 +43,8 @@ body {
   white-space: nowrap;
   font-size: 1rem;
   color: var(--foreground);
-  padding-right: 0%; /* Ensures space between original and duplicated text */
-  animation: scroll-left 20s linear infinite;
-  /* Ensure the text spans the full width of the container */
-  width: 100%;
+  animation: scroll-left 30s linear infinite;
+  position: relative;
 }
 
 /* Pseudo-element to duplicate content for smooth looping */
@@ -55,20 +53,19 @@ body {
   position: absolute;
   white-space: nowrap;
   top: 0;
-  left: 100%; /* Start right after the original text */
+  left: 100%; /* Place after the original text */
+  transform: translateX(0); /* Prevent overlap */
 }
 
 /* Keyframes for smooth scrolling effect */
 @keyframes scroll-left {
   0% {
-    transform: translateX(100%); /* Start from far right */
+    transform: translateX(100%); /* Start completely offscreen to the right */
   }
   100% {
-    transform: translateX(-100%); /* Move to the left, out of view */
+    transform: translateX(-100%); /* End completely offscreen to the left */
   }
 }
-
-
 
 
 
@@ -180,6 +177,18 @@ body {
 
 .hover\:underline-animation:hover::after {
   width: 100%;
+}
+
+/* Fade-in effect for scroll animation */
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px); /* Slight upward shift for the initial state */
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.fade-in-visible {
+  opacity: 1;
+  transform: translateY(0); /* Reset the upward shift */
 }
 
 
