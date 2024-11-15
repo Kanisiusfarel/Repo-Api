@@ -32,8 +32,45 @@ body {
   top: 0;
   left: 0;
   z-index: 20;
-  transition: background-color 0.3s ease, border-color 0.3s ease;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
 }
+
+/* Scrolling text for Upper Bar */
+.scrolling-text {
+  display: inline-block;
+  white-space: nowrap;
+  font-size: 1rem;
+  color: var(--foreground);
+  padding-right: 0%; /* Ensures space between original and duplicated text */
+  animation: scroll-left 20s linear infinite;
+  /* Ensure the text spans the full width of the container */
+  width: 100%;
+}
+
+/* Pseudo-element to duplicate content for smooth looping */
+.scrolling-text::after {
+  content: attr(data-text); /* Add duplicated text */
+  position: absolute;
+  white-space: nowrap;
+  top: 0;
+  left: 100%; /* Start right after the original text */
+}
+
+/* Keyframes for smooth scrolling effect */
+@keyframes scroll-left {
+  0% {
+    transform: translateX(100%); /* Start from far right */
+  }
+  100% {
+    transform: translateX(-100%); /* Move to the left, out of view */
+  }
+}
+
+
+
+
 
 /* Navbar Styling */
 .navbar {
@@ -60,12 +97,11 @@ body {
 .navbar-container:hover a,
 .navbar-container:hover span {
   color: black;
-  /* Remove the border-bottom here to prevent extra underline */
 }
 
 /* Ensure navbar remains active when scrolling past */
 .scroll-hover-active .navbar {
-  background-color: white;  /* White background when scrolled */
+  background-color: white;
   color: black;
   border-bottom-color: black;
 }
@@ -84,7 +120,7 @@ body {
   height: 100vh; /* Ensure the slide is full viewport height */
   display: flex;
   justify-content: center;
-  align-items: flex-end; /* Ensure text is at the bottom */
+  align-items: flex-end;
 }
 
 /* Text content on slides */
@@ -138,13 +174,14 @@ body {
   bottom: 0;
   width: 0%;
   height: 2px; /* Adjust thickness of the underline */
-  background-color: black; /* Underline color */
-  transition: width 0.3s ease; /* Animation speed */
+  background-color: black;
+  transition: width 0.3s ease;
 }
 
 .hover\:underline-animation:hover::after {
-  width: 100%; /* Expand underline to full width */
+  width: 100%;
 }
+
 
 
 
