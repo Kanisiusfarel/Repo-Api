@@ -1,12 +1,15 @@
 import { Request, Response } from "express";
 import { AdminService } from "../services/admin.service";
 import { Event } from "../models/models";
+import { EmailService } from "../services/email.service";  // Import EmailService
 
 export class AdminController {
   private adminService: AdminService;
+  private emailService: EmailService; // Instance EmailService
 
   constructor() {
     this.adminService = new AdminService();
+    this.emailService = new EmailService(); // Instantiate EmailService
   }
 
   async getEvents(req: Request, res: Response) {
@@ -45,7 +48,7 @@ export class AdminController {
 
   async createEvent(req: Request, res: Response) {
     try {
-      const { name, description, category, price, stock, image } = req.body;
+      const { name, description, category, price, stock, image, emails } = req.body;
 
       const event: Event = {
         name: name,
@@ -57,6 +60,12 @@ export class AdminController {
       };
 
       const data = await this.adminService.createEvent(event);
+
+      // After creating the event, send email to the provided email addresses
+      if (emails && emails.length > 0) {
+        await this.emailService.sendEmail(emails, data);  // Send the email with event details
+      }
+
       res.status(201).send({
         message: "Event created successfully",
         status: res.statusCode,
@@ -75,6 +84,12 @@ export class AdminController {
     const id = Number(req.params.eventId);
     const updatedEvent = await this.adminService.updateEvent(id, req.body);
     if (updatedEvent) {
+      // Send email after updating the event
+      const { emails } = req.body; // Expecting email list in request body
+      if (emails && emails.length > 0) {
+        await this.emailService.sendEmail(emails, updatedEvent);  // Send email with updated event details
+      }
+
       res.status(200).send({
         message: "Update event successfully",
         status: res.statusCode,
@@ -156,4 +171,3 @@ export class AdminController {
     }
   }
 }
-

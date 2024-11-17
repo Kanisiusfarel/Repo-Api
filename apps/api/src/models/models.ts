@@ -4,7 +4,7 @@ export interface Event {
     category: string;
     price: number;
     stock: number;
-    image: string;
+    image: string | null;
   }
 
 export interface Payment {
@@ -25,6 +25,13 @@ export interface Auth {
   name: string;
   password: string;
   role: string;
+}
+export interface Email {
+  from: string | undefined;
+  to: string;
+  subject: string;
+  template: string;
+  context: any;
 }
 
   
