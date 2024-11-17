@@ -34,7 +34,7 @@ export class AdminService {
         date: new Date(), // Adjust date as needed; you may want to take it from data
         stock: validatedData.stock,
         image: validatedData.image,
-        venue: validatedData.category, // Assuming category corresponds to venue
+        category: validatedData.category, // Assuming category corresponds to venue
         price: validatedData.price,
         discounted_price: validatedData.price, // Default to price initially
         created_by: 1, // Replace with the actual admin user ID
