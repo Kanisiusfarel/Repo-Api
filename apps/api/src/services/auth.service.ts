@@ -6,6 +6,12 @@ import { authSchema } from "../validators/auth.validator";
 
 const JWT_SECRET = process.env.JWT_SECRET as string;
 
+// Mendefinisikan tipe untuk decoded JWT token
+interface DecodedToken {
+  id: number;
+  role: string;
+}
+
 export class AuthService {
   private prisma: PrismaClient;
 
@@ -60,8 +66,8 @@ export class AuthService {
 
   async refreshToken(token: string) {
     try {
-      // Verify and decode the token
-      const decoded: any = jwt.verify(token, JWT_SECRET);
+      // Verify and decode the token using the DecodedToken interface
+      const decoded = jwt.verify(token, JWT_SECRET) as DecodedToken;
 
       // Find the user associated with the token
       const user = await this.prisma.users.findUnique({

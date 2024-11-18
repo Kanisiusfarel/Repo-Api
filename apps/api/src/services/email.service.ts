@@ -1,6 +1,6 @@
 import environment from "dotenv";
 import { Event } from "../models/models";
-import { Email } from "../models/models";
+import { EmailModel } from "../models/models";
 import sendEmail from "../config/nodemailer";
 
 environment.config();
@@ -9,7 +9,7 @@ export class EmailService {
   sendEmail(email: string[], product: Event) {
     console.log("image : ", product.image)
 
-    const mailOptions: Email = {
+    const mailOptions: EmailModel = {
       from: process.env.EMAIL_USER,
       to: email.join(", "),
       subject: "New Product Arrived!",

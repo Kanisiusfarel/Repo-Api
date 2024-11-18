@@ -34,7 +34,7 @@ model Events {
   date              DateTime
   stock             Int
   image             String?
-  category             String 
+  category          String 
   price             Float
   discounted_price  Float
   created_by        Int

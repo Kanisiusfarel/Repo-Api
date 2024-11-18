@@ -24,12 +24,19 @@ export class UserController {
         status: res.statusCode,
         data: transaction,
       });
-    } catch (error: any) {
-      res.status(400).send({
-        message: "Failed to purchase event ticket",
-        status: res.statusCode,
-        detail: error.message,
-      });
+    } catch (error: unknown) {  // Ganti any ke unknown
+      if (error instanceof Error) {  // Cek apakah error adalah instance dari Error
+        res.status(400).send({
+          message: "Failed to purchase event ticket",
+          status: res.statusCode,
+          detail: error.message,
+        });
+      } else {
+        res.status(400).send({
+          message: "An unknown error occurred",
+          status: res.statusCode,
+        });
+      }
     }
   }
 
@@ -51,12 +58,19 @@ export class UserController {
           status: res.statusCode,
         });
       }
-    } catch (error: any) {
-      res.status(500).send({
-        message: "Failed to fetch transaction history",
-        status: res.statusCode,
-        detail: error.message,
-      });
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        res.status(500).send({
+          message: "Failed to fetch transaction history",
+          status: res.statusCode,
+          detail: error.message,
+        });
+      } else {
+        res.status(500).send({
+          message: "An unknown error occurred",
+          status: res.statusCode,
+        });
+      }
     }
   }
 
@@ -86,12 +100,19 @@ export class UserController {
           status: res.statusCode,
         });
       }
-    } catch (error: any) {
-      res.status(500).send({
-        message: "Failed to retrieve events",
-        status: res.statusCode,
-        detail: error.message,
-      });
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        res.status(500).send({
+          message: "Failed to retrieve events",
+          status: res.statusCode,
+          detail: error.message,
+        });
+      } else {
+        res.status(500).send({
+          message: "An unknown error occurred",
+          status: res.statusCode,
+        });
+      }
     }
   }
 
@@ -113,12 +134,19 @@ export class UserController {
           status: res.statusCode,
         });
       }
-    } catch (error: any) {
-      res.status(500).send({
-        message: "Failed to retrieve event",
-        status: res.statusCode,
-        detail: error.message,
-      });
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        res.status(500).send({
+          message: "Failed to retrieve event",
+          status: res.statusCode,
+          detail: error.message,
+        });
+      } else {
+        res.status(500).send({
+          message: "An unknown error occurred",
+          status: res.statusCode,
+        });
+      }
     }
   }
 }

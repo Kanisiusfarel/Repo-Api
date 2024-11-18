@@ -1,12 +1,13 @@
-import nodemailer from "nodemailer";
+// sendMail.ts
+import nodemailer, { Transporter, SendMailOptions } from "nodemailer";
 import ejs from "ejs";
 import path from "path";
 import environment from "dotenv";
-import { Email } from "../models/models";
+import { EmailModel } from "../models/models";
 
 environment.config();
 
-const transporter: any = nodemailer.createTransport({
+const transporter: Transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
     user: process.env.EMAIL_USER,
@@ -15,23 +16,20 @@ const transporter: any = nodemailer.createTransport({
   secure: true,
 });
 
-async function sendMail(email: Email) {
-  // Menggunakan path untuk mendapatkan lokasi template
+async function sendMail(email: EmailModel): Promise<void> {
   const templatePath = path.join(__dirname, "/views", `${email.template}.ejs`);
 
-  // Render file EJS menjadi HTML
-  const html = await ejs.renderFile(templatePath, email.context);
+  // Menggunakan type assertion untuk memastikan tipe hasil render adalah string
+  const html = (await ejs.renderFile(templatePath, email.context)) as string;
 
-  // Mengatur opsi email
-  const mailOptions = {
+  const mailOptions: SendMailOptions = {
     from: process.env.EMAIL_USER,
     to: email.to,
     subject: email.subject,
-    html,
+    html, // Menggunakan html yang sudah bertipe string
   };
 
-  // Mengirim email
-  return transporter.sendMail(mailOptions);
+  await transporter.sendMail(mailOptions);
 }
 
 export default sendMail;

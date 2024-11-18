@@ -24,7 +24,7 @@ router.get(
 
 // Route for fetching a list of events with filters
 router.get("/events", userController.getEvents.bind(userController));
-
+               
 // Route for fetching event details by event ID
 router.get("/events/detail/:eventId", userController.getEventById.bind(userController));
 

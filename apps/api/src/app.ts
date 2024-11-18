@@ -35,5 +35,7 @@ app.use(errorHandler.errorHandler());
 // Start the server
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`Listening on port : ${PORT}`);
+  console.log("JWT_SECRET:", process.env.JWT_SECRET);
+
 });
 

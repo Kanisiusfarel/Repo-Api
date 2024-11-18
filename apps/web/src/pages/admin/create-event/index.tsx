@@ -1,7 +1,7 @@
 import React from "react";
 import { useForm, useFieldArray } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { eventSchema, EventData } from "@/utils/schema";
+import { eventSchema,EventData } from "@/utils/schema";
 import axios from "axios";
 
 const CreateEvent = () => {
